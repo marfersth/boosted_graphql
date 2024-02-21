@@ -21,11 +21,30 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
+    field :subjects, [Types::SubjectType] do
+      argument :params, String, required: false
+      argument :first, Integer, required: false
+    end
+
+    field :permission, [Types::PermissionType], null: false, description: "Return a list of permissions"
+    field :properties, [Types::PropertyType, null: true]
+
+    def subjects(params: nil, first: nil)
+      scope = Subject.includes(:permissions, properties: [:permissions])
+      subjects = first ? scope.limit(first) : scope.all
+      if params
+        SubjectQueryObject.new(params, subjects).get
+      else
+        subjects
+      end
+    end
+
+    def permissions
+      Permission.all
+    end
+
+    def properties
+      Property.includes(:permissions).all
     end
   end
 end
