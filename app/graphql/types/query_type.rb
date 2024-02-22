@@ -21,7 +21,7 @@ module Types
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
-    field :subjects, [Types::SubjectType] do
+    field :subjects, [Types::SubjectType], preload_association: "subject" do
       argument :params, String, required: false
       argument :first, Integer, required: false
     end

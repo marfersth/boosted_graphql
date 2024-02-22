@@ -60,8 +60,8 @@ company_2 = Business::Company.create(name: 'company_2')
 for i in 0..49_999
   puts "subject #{i}"
   subjects = Subject.insert_all(
-    [{data: "data_subject_1-#{i}", business_company_id: company_1.id, created_at: Time.now, updated_at: Time.now},
-     {data: "data_subject_2-#{i}", business_company_id: company_2.id, created_at: Time.now, updated_at: Time.now}],
+    [{update_type: 'note', data: "data_subject_1-#{i}", business_company_id: company_1.id, created_at: Time.now, updated_at: Time.now},
+     {update_type: 'document', data: "data_subject_2-#{i}", business_company_id: company_2.id, created_at: Time.now, updated_at: Time.now}],
     returning: :id)
   Permission.insert_all(
     [{permissionable_id: subjects[0]['id'], permissionable_type: 'Subject', group_id: group_1.id, created_at: Time.now, updated_at: Time.now},

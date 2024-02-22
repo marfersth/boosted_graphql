@@ -43,3 +43,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "graphql", "~> 2.2"
 gem 'ransack', '~> 2.5.0'
+
+gem 'sass-rails'
+gem 'uglifier'
+gem 'coffee-rails'

@@ -7,12 +7,12 @@ class GraphqlController < ApplicationController
   # protect_from_forgery with: :null_session
 
   def execute
+  # StackProf.run(mode: :wall, out: "graphql-profile.dump") do
     variables = prepare_variables(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      current_group_id: current_group_id,
     }
     result = BoostedGraphqlSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -48,5 +48,9 @@ class GraphqlController < ApplicationController
     logger.error e.backtrace.join("\n")
 
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+  end
+
+  def current_group_id
+    (Group.find_by(name: 'group_1') || Group.find(request.headers['group-id'])).id
   end
 end

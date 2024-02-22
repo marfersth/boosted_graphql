@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2024_02_21_202825) do
 
   create_table "subjects", force: :cascade do |t|
     t.jsonb "data", default: {}
+    t.string "update_type", null: false
     t.bigint "business_company_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
